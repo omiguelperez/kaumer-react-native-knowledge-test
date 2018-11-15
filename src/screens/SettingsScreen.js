@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import { Container } from 'native-base';
 
 export default class SettingsScreen extends Component {
-  render() {
+render() {
     return (
       <Container>
         <Header

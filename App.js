@@ -1,56 +1,24 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button } from 'react-native';
-import { createDrawerNavigator, DrawerNavigator } from 'react-navigation';
+import { DrawerNavigator } from 'react-navigation';
+import HomeScreen from './src/screens/HomeScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 
-class MyHomeScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Home',
-  };
-
-  render() {
-    return (
-      <View>
-        <Text>Home page!</Text>
-        <Button
-          onPress={() => this.props.navigation.toggleDrawer()}
-          title="DrawerOpen"
-        />
-      </View>
-    );
+export default DrawerNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        drawerLabel: 'Empleados'
+      }
+    },
+    Notifications: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        drawerLabel: 'Configuración'
+      }
+    },
+  }, {
+    drawerPosition: 'left',
+    initialRouteName: 'Home',
+    drawerWidth: 200
   }
-}
-
-class MyNotificationsScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Notifications',
-  };
-
-  render() {
-    return (
-      <View>
-        <Button
-          onPress={() => this.props.navigation.goBack()}
-          title="Go back home"
-        />
-        <Button
-          onPress={() => this.props.navigation.toggleDrawer()}
-          title="DrawerOpen"
-        />
-      </View>
-    );
-  }
-}
-
-
-export default DrawerNavigator({
-  Home: {
-    screen: MyHomeScreen,
-  },
-  Notifications: {
-    screen: MyNotificationsScreen,
-  },
-}, {
-  drawerPosition: 'left',
-  initialRouteName: 'Home',
-  drawerWidth: 200
-});
+);

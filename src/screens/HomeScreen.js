@@ -5,15 +5,24 @@ import { Modal, Text, TouchableHighlight, View, Alert } from 'react-native';
 import { Container, Content, Button, Fab, Icon } from 'native-base';
 import NewEmployeeModal from '../components/NewEmployeeModal';
 import EmployeeList from '../components/EmployeeList';
+import { getEmployees } from '../api-client';
 
 export default class HomeScreen extends Component {
   state = {
-    modalVisible: false
+    modalVisible: false,
+    employees: []
   };
 
   constructor() {
     super();
     this.setModalVisible = this.setModalVisible.bind(this);
+  }
+
+  componentDidMount () {
+    getEmployees()
+      .then(employees => {
+        this.setState({ ...this.state,  employees })
+      })
   }
 
   setModalVisible(visible) {
@@ -28,7 +37,9 @@ export default class HomeScreen extends Component {
           {...this.props}
         />
         <View style={styles.content}>
-          <EmployeeList />
+          <EmployeeList
+            employees={this.state.employees}
+          />
         
           <NewEmployeeModal
             modalVisible={this.state.modalVisible}

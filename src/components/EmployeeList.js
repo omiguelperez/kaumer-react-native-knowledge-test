@@ -3,40 +3,46 @@ import { ListView } from 'react-native';
 import { Container, Header, Content, Button, Icon, List, ListItem, Text } from 'native-base';
 import EmployeeDetailModal from './EmployeeDetailModal';
 
-const datas = [
-  'Simon Mignolet',
-  'Nathaniel Clyne',
-  'Dejan Lovren',
-  'Mama Sakho',
-  'Alberto Moreno',
-  'Emre Can',
-  'Joe Allen',
-  'Phil Coutinho',
-];
-
 export default class EmployeeList extends Component {
   constructor(props) {
     super(props);
+    this.updateDataSource = this.updateDataSource.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       basic: true,
-      listViewData: datas,
       modalVisible: false,
-      employee: null
+      employee: null,
+      dataSource: this.ds,
     };
-    this.setModalVisible = this.setModalVisible.bind(this);
+  }
+
+  componentDidMount () {
+    this.updateDataSource(this.props.employees);
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.employees !== this.props.employees) {
+      this.updateDataSource(newProps.employees);
+    }
   }
 
   setModalVisible(visible, employee = null) {
     this.setState({ 
       ...this.state, 
       modalVisible: visible,
-      employee
+      employee: employee
+    });
+  }
+
+  updateDataSource(data) {
+    this.setState({
+      ...this.state,
+      dataSource: this.state.dataSource.cloneWithRows(data),
     });
   }
 
   render() {
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
         <Content>
@@ -48,10 +54,10 @@ export default class EmployeeList extends Component {
           <List
             leftOpenValue={75}
             rightOpenValue={-75}
-            dataSource={ds.cloneWithRows(this.state.listViewData)}
+            dataSource={this.state.dataSource}
             renderRow={data =>
               <ListItem>
-                <Text> {data} </Text>
+                <Text> {data.name} </Text>
               </ListItem>}
             renderLeftHiddenRow={data =>
               <Button full onPress={() => this.setModalVisible(true, data)}>

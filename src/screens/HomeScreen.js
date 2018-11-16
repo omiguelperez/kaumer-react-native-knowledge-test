@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import { Modal, Text, TouchableHighlight, View, Alert } from 'react-native';
 import { Container, Content, Button, Fab, Icon } from 'native-base';
 import NewEmployeeModal from '../components/NewEmployeeModal';
+import EmployeeList from '../components/EmployeeList';
 
 export default class HomeScreen extends Component {
   state = {
@@ -19,7 +20,6 @@ export default class HomeScreen extends Component {
     this.setState({ modalVisible: visible });
   }
 
-
   render() {
     return (
       <Container>
@@ -28,6 +28,8 @@ export default class HomeScreen extends Component {
           {...this.props}
         />
         <View style={styles.content}>
+          <EmployeeList />
+        
           <NewEmployeeModal
             modalVisible={this.state.modalVisible}
             setModalVisible={this.setModalVisible}

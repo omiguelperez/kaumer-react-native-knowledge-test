@@ -10,7 +10,7 @@ export default class NewEmployeeModal extends Component {
   }
 
   saveEmployee () {
-    
+
   }
   
   render() {
@@ -27,7 +27,7 @@ export default class NewEmployeeModal extends Component {
             closeModal={() => this.props.setModalVisible(false)}
             title="Nuevo empleado"
             saveOption={true}
-            saveOptionAction={this.saveEmployee}
+            saveOptionCallback={this.saveEmployee}
           />
           <Form style={styles.form}>
             <Item style={[styles.formInput, styles.staticInput]} inlineLabel>

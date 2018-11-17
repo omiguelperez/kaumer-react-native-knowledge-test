@@ -4186,6 +4186,18 @@ react-clone-referenced-element@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.0.tgz#9cdda7f2aeb54fea791f3ab8c6ab96c7a77d0158"
 
+react-currency-format@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-currency-format/-/react-currency-format-1.0.0.tgz#9be9c984c357bf8e847368c5422b5f4d4aa819b3"
+  dependencies:
+    prop-types "^15.6.0"
+
+react-currency-formatter@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-currency-formatter/-/react-currency-formatter-1.1.0.tgz#69296c82efd6ef7a9e74bcae52414a5e23bcdba2"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-deep-force-update@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.1.2.tgz#3d2ae45c2c9040cbb1772be52f8ea1ade6ca2ee1"

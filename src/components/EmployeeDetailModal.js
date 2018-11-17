@@ -62,7 +62,7 @@ export default class EmployeeDetailModal extends Component {
                 <Icon active name="logo-whatsapp" />
                 <Text>Teléfono</Text>
                 <Right>
-                  <Text>{this.state.employee.person_number}</Text>
+                  <Text>{this.state.employee.phone_number}</Text>
                 </Right>
               </CardItem>
             </Card>

@@ -1,4 +1,4 @@
-const URL = 'http://7d790087.ngrok.io/api/employees/'
+const URL = 'http://29be9c93.ngrok.io/api/employees/'
 
 export function getEmployees () {
   return fetch(URL)

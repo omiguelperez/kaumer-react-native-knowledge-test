@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Header, Left, Body, Right, Button, Title, Icon, Text } from 'native-base';
 
 export default class ModalHeader extends Component {
- 
   render() {
     return (
       <Header>

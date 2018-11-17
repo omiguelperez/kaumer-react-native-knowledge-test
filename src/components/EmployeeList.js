@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { Container, Header, Content, Button, Icon, List, ListItem, Text } from 'native-base';
 import EmployeeDetailModal from './EmployeeDetailModal';
+import LiquidateEmployeeModal from './LiquidateEmployeeModal';
 
 export default class EmployeeList extends Component {
   constructor(props) {
     super(props);
     this.updateDataSource = this.updateDataSource.bind(this);
-    this.setModalVisible = this.setModalVisible.bind(this);
+    this.setProfileModalVisible = this.setProfileModalVisible.bind(this);
+    this.setLiquidateEmployeeModalVisible = this.setLiquidateEmployeeModalVisible.bind(this);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       basic: true,
-      modalVisible: false,
+      profileModalVisible: false,
+      liquidateModalVisible: false,
       employee: null,
       dataSource: this.ds,
     };
@@ -27,10 +30,18 @@ export default class EmployeeList extends Component {
     }
   }
 
-  setModalVisible(visible, employee = null) {
+  setProfileModalVisible(visible, employee = null) {
     this.setState({ 
       ...this.state, 
-      modalVisible: visible,
+      profileModalVisible: visible,
+      employee: employee
+    });
+  }
+
+  setLiquidateEmployeeModalVisible(visible, employee = null) {
+    this.setState({ 
+      ...this.state, 
+      liquidateModalVisible: visible,
       employee: employee
     });
   }
@@ -47,8 +58,13 @@ export default class EmployeeList extends Component {
       <Container>
         <Content>
           <EmployeeDetailModal
-            modalVisible={this.state.modalVisible}
-            setModalVisible={this.setModalVisible}
+            modalVisible={this.state.profileModalVisible}
+            setModalVisible={this.setProfileModalVisible}
+            employee={this.state.employee}
+          />
+          <LiquidateEmployeeModal
+            modalVisible={this.state.liquidateModalVisible}
+            setModalVisible={this.setLiquidateEmployeeModalVisible}
             employee={this.state.employee}
           />
           <List
@@ -57,14 +73,14 @@ export default class EmployeeList extends Component {
             dataSource={this.state.dataSource}
             renderRow={data =>
               <ListItem>
-                <Text> {data.name} </Text>
+                <Text> {data.name} {data.last_name} </Text>
               </ListItem>}
             renderLeftHiddenRow={data =>
-              <Button full onPress={() => this.setModalVisible(true, data)}>
+              <Button full warning onPress={() => this.setProfileModalVisible(true, data)}>
                 <Icon active name="eye" />
               </Button>}
             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-              <Button full success onPress={_ => alert(data)}>
+              <Button full success onPress={() => this.setLiquidateEmployeeModalVisible(true, data)}>
                 <Icon active name="calculator" />
               </Button>}
           />

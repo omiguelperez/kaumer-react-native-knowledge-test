@@ -59,7 +59,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.holiday_percentage + ' %' || ''}`}
+                {
+                  this.props.setting.holiday_percentage && 
+                  `${this.props.setting.holiday_percentage + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -71,7 +74,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.unemployment_percentage + ' %' || ''}`}
+                {
+                  this.props.setting.unemployment_percentage && 
+                  `${this.props.setting.unemployment_percentage + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -83,7 +89,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.unemployment_interest + ' %' || ''}`}
+                {
+                  this.props.setting.unemployment_interest && 
+                  `${this.props.setting.unemployment_interest + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -95,7 +104,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.premium_services + ' %' || ''}`}
+                {
+                  this.props.setting.premium_services && 
+                  `${this.props.setting.premium_services + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -107,7 +119,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.health_percentage + ' %' || ''}`}
+                {
+                  this.props.setting.health_percentage && 
+                  `${this.props.setting.health_percentage + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -119,7 +134,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.pension_percentage + ' %' || ''}`}
+                {
+                  this.props.setting.pension_percentage && 
+                  `${this.props.setting.pension_percentage + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -131,7 +149,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.occupational_hazards + ' %' || ''}`}
+                {
+                  this.props.setting.occupational_hazards && 
+                  `${this.props.setting.occupational_hazards + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>
@@ -143,7 +164,10 @@ export default class SettingList extends Component {
           <Content style={styles.contentSettings}>
             <Badge style={styles.item}>
               <Text style={styles.itemText}>
-                {`${this.props.setting.cash_contributions + ' %' || ''}`}
+                {
+                  this.props.setting.cash_contributions && 
+                  `${this.props.setting.cash_contributions + ' %' || ''}`
+                  }
               </Text>
             </Badge>
           </Content>

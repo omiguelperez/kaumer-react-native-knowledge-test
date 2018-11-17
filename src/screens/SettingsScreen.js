@@ -6,8 +6,33 @@ import {
 } from 'native-base';
 import SettingList from '../components/SettingList';
 import ConfigureSettings from '../components/ConfigureSettings';
+import { getCurrentSetting } from '../api-client';
+
 
 export default class SettingsScreen extends Component {
+  constructor () {
+    super();
+    this.state = {
+      setting: {},
+      notfound: false
+    };
+  }
+  
+  componentDidMount() {
+    getCurrentSetting()
+      .then(setting => {
+        this.setState({
+          setting: setting
+        });
+      })
+      .catch(err => {
+        this.setState({
+          setting: {},
+          notfound: true
+        })
+      })
+  }
+  
   render() {
     return (
       <Container>
@@ -16,8 +41,10 @@ export default class SettingsScreen extends Component {
           {...this.props}
         />
         <Content style={styles.settingsContent}>
-          <ConfigureSettings />
-          <SettingList />
+          { this.state.notfound && <ConfigureSettings /> }
+          <SettingList 
+            setting={this.state.setting}
+          />
         </Content>
       </Container>
     );

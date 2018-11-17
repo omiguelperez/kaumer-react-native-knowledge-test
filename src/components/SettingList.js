@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import {
   Container, Content, List, ListItem, Text, Left, Button, Badge
 } from 'native-base';
-import { getCurrentSetting } from '../api-client';
 
 export default class SettingList extends Component {
   render() {

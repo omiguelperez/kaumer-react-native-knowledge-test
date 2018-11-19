@@ -17,12 +17,12 @@ export function saveEmployee(emp) {
     .then(response => response.json())
 }
 
-export function getLiquidations (employeeId) {
+export function getLiquidations(employeeId) {
   return fetch(`${URL}/paysheets/${employeeId}/`)
-    .then(response =>  response.json())
+    .then(response => response.json())
 }
 
-export function liquidateEmployee (data) {
+export function liquidateEmployee(data) {
   return fetch(`${URL}/paysheets/`, {
     method: 'POST',
     headers: {
@@ -37,4 +37,9 @@ export function liquidateEmployee (data) {
 export function getCurrentSetting() {
   return fetch(`${URL}/settings/`)
     .then(response => response.json());
+}
+
+export function verify(employeeId) {
+  return fetch(`${URL}/paysheets/is-liquidated/${employeeId}/`)
+    .then(response => response.json())
 }

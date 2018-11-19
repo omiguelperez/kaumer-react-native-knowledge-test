@@ -5,6 +5,8 @@ import { Form, Item, Label, Input, Content, Button } from 'native-base'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { liquidateEmployee } from '../api-client'
 import monthName from '../month'
+import { verify } from '../api-client'
+import Detail from './Detail';
 
 export default class LiquidateEmployeeModal extends Component {
   constructor() {
@@ -15,18 +17,32 @@ export default class LiquidateEmployeeModal extends Component {
       month: monthName[new Date().getMonth() + 1],
       worked_days: 0,
       employee: {
+        id: '',
         name: '',
         last_name: '',
-      }
+      },
+      is_liquidated: false,
+      detail: {}
     }
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.employee && newProps.employee !== this.state.employee) {
+    if (newProps.employee) {
       this.setState({
         ...this.state,
+        is_liquidated: false,
+        detail: {},
         employee: newProps.employee
       });
+
+      verify(newProps.employee.id)
+        .then(response => {
+          this.setState({
+            ...this.state,
+            is_liquidated: response.is_liquidated,
+            detail: response.detail
+          });
+        })
     }
   }
 
@@ -36,6 +52,11 @@ export default class LiquidateEmployeeModal extends Component {
       employee_id: this.state.employee.id
     })
       .then(created => {
+        this.setState({
+          ...this.state,
+          detail: {},
+          is_liquidated: false
+        })
         this.props.setModalVisible(false)
       })
   }
@@ -59,51 +80,60 @@ export default class LiquidateEmployeeModal extends Component {
           </Text>
         </View>
         <Content>
-          <Form style={styles.form}>
-            <Item disabled style={[styles.formInput, styles.staticInput]}>
-              <Icon style={styles.salaryIcon} name='ios-contact' size={30} />
-              <Label>Cédula</Label>
-              <Input
-                disabled
-                keyboardType="numeric"
-                placeholder="Cédula"
-                value={`${this.state.employee.person_number}`}
-              />
-            </Item>
-            <Item disabled style={[styles.formInput, styles.staticInput]}>
-              <Icon style={styles.salaryIcon} name='ios-alert' size={30} />
-              <Label>Salario básico</Label>
-              <Input
-                disabled
-                keyboardType="numeric"
-                placeholder="Salario empleado"
-                value={`${this.state.employee.salary}`}
-              />
-            </Item>
-            <Item style={[styles.formInput, styles.staticInput]}>
-              <Icon
-                style={styles.icon}
-                name="ios-bicycle"
-                size={30}
-                color="#000" />
-              <Input
-                autoFocus
-                ref={component => this._last_name = component}
-                keyboardType="numeric"
-                placeholder="Días trabajados"
-                onChangeText={(worked_days) => this.setState({
-                  ...this.state,
-                  worked_days: worked_days
-                })}
-              />
-            </Item>
-            <Button
-              onPress={this.liquidate}
-              style={styles.button}
-              success>
-              <Text style={styles.buttonText}>Liquidar</Text>
-            </Button>
-          </Form>
+          {
+            !this.state.is_liquidated && this.state.detail != {} && (
+              <Form style={styles.form}>
+                <Item disabled style={[styles.formInput, styles.staticInput]}>
+                  <Icon style={styles.salaryIcon} name='ios-contact' size={30} />
+                  <Label>Cédula</Label>
+                  <Input
+                    disabled
+                    keyboardType="numeric"
+                    placeholder="Cédula"
+                    value={`${this.state.employee.person_number}`}
+                  />
+                </Item>
+                <Item disabled style={[styles.formInput, styles.staticInput]}>
+                  <Icon style={styles.salaryIcon} name='ios-alert' size={30} />
+                  <Label>Salario básico</Label>
+                  <Input
+                    disabled
+                    keyboardType="numeric"
+                    placeholder="Salario empleado"
+                    value={`${this.state.employee.salary}`}
+                  />
+                </Item>
+                <Item style={[styles.formInput, styles.staticInput]}>
+                  <Icon
+                    style={styles.icon}
+                    name="ios-bicycle"
+                    size={30}
+                    color="#000" />
+                  <Input
+                    autoFocus
+                    ref={component => this._last_name = component}
+                    keyboardType="numeric"
+                    placeholder="Días trabajados"
+                    onChangeText={(worked_days) => this.setState({
+                      ...this.state,
+                      worked_days: worked_days
+                    })}
+                  />
+                </Item>
+                <Button
+                  onPress={this.liquidate}
+                  style={styles.button}
+                  success>
+                  <Text style={styles.buttonText}>Liquidar</Text>
+                </Button>
+              </Form>
+            )
+          }
+          {this.state.is_liquidated && (
+            <Detail
+              detail={this.state.detail}
+            />
+          )}
         </Content>
       </Modal>
     );

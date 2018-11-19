@@ -3,21 +3,20 @@ import { Modal, StyleSheet, Text, TouchableHighlight, View, Alert } from 'react-
 import ModalHeader from '../components/ModalHeader';
 import { Form, Item, Label, Input, Content, Button } from 'native-base'
 import Icon from 'react-native-vector-icons/Ionicons';
-
-const monthName = {
-  10: 'Octubre',
-  11: 'Noviembre'
-}
+import { liquidateEmployee } from '../api-client'
+import monthName from '../month'
 
 export default class LiquidateEmployeeModal extends Component {
   constructor() {
     super();
+    this.liquidate = this.liquidate.bind(this)
     this.state = state = {
       year: new Date().getFullYear(),
       month: monthName[new Date().getMonth() + 1],
+      worked_days: 0,
       employee: {
         name: '',
-        last_name: ''
+        last_name: '',
       }
     }
   }
@@ -29,6 +28,16 @@ export default class LiquidateEmployeeModal extends Component {
         employee: newProps.employee
       });
     }
+  }
+
+  liquidate() {
+    liquidateEmployee({
+      worked_days: this.state.worked_days,
+      employee_id: this.state.employee.id
+    })
+      .then(created => {
+        this.props.setModalVisible(false)
+      })
   }
 
   render() {
@@ -79,10 +88,19 @@ export default class LiquidateEmployeeModal extends Component {
                 color="#000" />
               <Input
                 autoFocus
+                ref={component => this._last_name = component}
                 keyboardType="numeric"
-                placeholder="Días trabajados" />
+                placeholder="Días trabajados"
+                onChangeText={(worked_days) => this.setState({
+                  ...this.state,
+                  worked_days: worked_days
+                })}
+              />
             </Item>
-            <Button style={styles.button} success>
+            <Button
+              onPress={this.liquidate}
+              style={styles.button}
+              success>
               <Text style={styles.buttonText}>Liquidar</Text>
             </Button>
           </Form>

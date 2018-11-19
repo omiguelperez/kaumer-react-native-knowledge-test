@@ -1,4 +1,4 @@
-const URL = 'http://29be9c93.ngrok.io/api'
+const URL = 'http://348a4546.ngrok.io/api'
 
 export function getEmployees() {
   return fetch(`${URL}/employees/`)
@@ -13,6 +13,23 @@ export function saveEmployee(emp) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(emp)
+  })
+    .then(response => response.json())
+}
+
+export function getLiquidations (employeeId) {
+  return fetch(`${URL}/paysheets/${employeeId}/`)
+    .then(response =>  response.json())
+}
+
+export function liquidateEmployee (data) {
+  return fetch(`${URL}/paysheets/`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   })
     .then(response => response.json())
 }
